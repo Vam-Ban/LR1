@@ -1,3 +1,4 @@
 {
-    "port" : 6000
+    "port" : 6000,
+    "mongoUri": "mongodb+srv://Denys001:qwerty171@cluster0.kmq97.azure.mongodb.net/<dbname>?retryWrites=true&w=majority"
 }
