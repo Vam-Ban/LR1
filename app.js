@@ -3,6 +3,7 @@ const config = require('config')
 const mongoose = require('mongoose')
 
 const app = express()
+app.use(express.json())
 
 app.use('/api/auth', require('./Routes/auth.routes'))
 
