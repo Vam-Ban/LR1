@@ -7,11 +7,12 @@ const jwt = require('jsonwebtoken')
 const config = require('config')
 
 //   api/auth/register
-const validationRegister = [
+router.post('/register', 
+[
     check('email', 'Некоректний email').isEmail(),
     check('password', 'Довжина паролю повина бути більша 6 символів').isLength({min: 6})
 ]
-router.post('/register', validationRegister , async (req, res) => {
+, async (req, res) => {
     try{
         const errors = validationResult(req)
         if(!errors.isEmpty()){
@@ -35,10 +36,11 @@ router.post('/register', validationRegister , async (req, res) => {
 })
 
 //   api/auth/login
-const validationLogin = [
+router.post('/login', 
+[
     check('email', 'Некоректний email').isEmail()
 ]
-router.post('/login', validationLogin, async (req, res) => {
+, async (req, res) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
         return res.status(400).json({
@@ -54,7 +56,7 @@ router.post('/login', validationLogin, async (req, res) => {
 
     const isMatch = await bcrypt.compare(user.password, bcrypt.hash(password, 12))
     if(!isMatch){
-        return res.status(400).json({message: "Не правилтний пароль"})
+        return res.status(400).json({message: "Не правильний пароль"})
     }
     const token = jwt.sign(
         {userId: user.id},
