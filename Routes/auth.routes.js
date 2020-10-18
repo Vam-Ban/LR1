@@ -26,7 +26,7 @@ router.post('/register', registerValidation, async (req, res) => {
             return res.status(400).json({ message: "Користувач з наним email вже існує" })
         }
         const hashedpassword = await bcrypt.hash(password, 12)
-        const user = new User({ email, login, hasedpassword })
+        const user = new User({ email, hasedpassword })
         await user.save()
         res.json({ massage: "Користувач створений" })
     } catch (e) {
