@@ -9,7 +9,7 @@ import {ReestrPage} from './pages/ReestrPage'
 
 
 export const useRoutes = isAuth => {
-  if (isAuth==true) {
+  if (isAuth) {
     return(
       <Switch>
       <Route path="/news" exact>
