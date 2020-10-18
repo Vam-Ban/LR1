@@ -21,16 +21,17 @@ router.post('/register', registerValidation, async (req, res) => {
             })
         }
         const { email, password } = req.body
-        const candidate = await User.findOne(email)
-        if (condidate) {
+        const candidate = await User.findOne({email})
+        if (candidate) {
             return res.status(400).json({ message: "Користувач з наним email вже існує" })
         }
         const hashedpassword = await bcrypt.hash(password, 12)
-        const user = new User({ email, hasedpassword })
+        const user = new User({ email, password: hashedpassword })
         await user.save()
-        res.json({ massage: "Користувач створений" })
+        res.status(201).json({ message: "Користувач створений" })
     } catch (e) {
-        res.status(500).json({ messsge: "Помилка сервера... Спробуйте зноу" })
+        console.log(e.message)
+        res.status(500).json({ message: "Помилка сервера... Спробуйте зноу "})
     }
 })
 
