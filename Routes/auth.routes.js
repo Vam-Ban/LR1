@@ -52,10 +52,10 @@ router.post('/login', loginValidation, async (req, res) => {
         const { email, password } = req.body
         const user = await User.findOne({email})
         if (!user) {
-            return res.status(400).json({ message: "Користувача з даним  email не існує" })
+            return res.status(400).json({ message: "Користувача з даним  email не існує", user })
         }
 
-        const isMatch = await bcrypt.compare(user.password, bcrypt.hash(password, 12))
+        const isMatch = await bcrypt.compare(user.password, password)
         if (!isMatch) {
             return res.status(400).json({ message: "Не правильний пароль" })
         }

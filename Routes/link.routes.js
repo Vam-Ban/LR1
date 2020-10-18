@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 })
 router.get('/:id', async (req, res) => {
     try {
-        const link = await Link.find({owner: req.params.id})
+        const link = await Link.findById(req.params.id)
         res.json(link)
     } catch (e) {
         res.status(500).json({ message: "Помилка сервера... Спробуйте зноу" })
