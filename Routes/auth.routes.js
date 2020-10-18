@@ -20,7 +20,7 @@ router.post('/register', registerValidation, async (req, res) => {
                 message: "Не коректні дані"
             })
         }
-        const { email, password, login } = req.body
+        const { email, password } = req.body
         const candidate = await User.findOne(email)
         if (condidate) {
             return res.status(400).json({ message: "Користувач з наним email вже існує" })
