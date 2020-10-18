@@ -20,23 +20,25 @@ router.post('/register', registerValidation, async (req, res) => {
                 message: "Не коректні дані"
             })
         }
-        const { email, password, login } = req.body
-        const candidate = await User.findOne(email)
-        if (condidate) {
-            return res.status(400).json({ message: "Користувач з наним email вже існує" })
+        const { email, password } = req.body
+        const candidate = await User.findOne({email})
+        if (candidate) {
+            return res.status(400).json({ message: "Користувач з даним email вже існує" })
         }
         const hashedpassword = await bcrypt.hash(password, 12)
-        const user = new User({ email, login, hasedpassword })
+        const user = new User({ email, password: hashedpassword })
         await user.save()
-        res.json({ massage: "Користувач створений" })
+        res.status(201).json({ message: "Користувач створений" })
     } catch (e) {
-        res.status(500).json({ messsge: "Помилка сервера... Спробуйте зноу" })
+        console.log(e.message)
+        res.status(500).json({ message: "Помилка сервера... Спробуйте зноу "})
     }
 })
 
 //   api/auth/login
 const loginValidation = [
-    check('email', 'Некоректний email').isEmail()
+    check('email', 'Некоректний email').isEmail(),
+    check('password', 'Введите пароль').exists()
 ]
 router.post('/login', loginValidation, async (req, res) => {
     try {
@@ -48,12 +50,12 @@ router.post('/login', loginValidation, async (req, res) => {
             })
         }
         const { email, password } = req.body
-        const user = await User.findOne(email)
+        const user = await User.findOne({email})
         if (!user) {
-            return res.status(400).json({ message: "Користувача з даним  email не існує" })
+            return res.status(400).json({ message: "Користувача з даним  email не існує", email })
         }
 
-        const isMatch = await bcrypt.compare(user.password, bcrypt.hash(password, 12))
+        const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch) {
             return res.status(400).json({ message: "Не правильний пароль" })
         }
@@ -66,7 +68,7 @@ router.post('/login', loginValidation, async (req, res) => {
             token, userId: user.id
         })
     } catch (e) {
-        res.status(500).json({ messsge: "Помилка сервера... Спробуйте зноу" })
+        res.status(500).json({ message: "Помилка сервера... Спробуйте зноу" })
     }
 })
 
