@@ -17,9 +17,8 @@ export const Navbar = () => {
       <div className="nav-wrapper blue darken-1">
         <span href='/' className='brand-logo'>GachiClub</span>
         <ul id='nav-mobile' className="right hide-on-med-and-down">
-          <li><NavLink to="/news">Новини</NavLink></li>
-          <li><NavLink to="/profile">Профіль</NavLink></li>
-          <li><NavLink to="/friends">Друзі</NavLink></li>
+          <li><NavLink to="/links">Посилання</NavLink></li>
+          <li><NavLink to="/create">Створити</NavLink></li>
           <li><a href="/" onClick={logoutHandler}>Вийти</a></li>
         </ul>
       </div>

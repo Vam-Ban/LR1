@@ -1,30 +1,24 @@
 import React from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
-import {NewsPage} from './pages/NewsPage'
+import {LinksPage} from './pages/LinksPage'
 import {AuthPage} from './pages/AuthPage'
-import {ProfilePage} from './pages/ProfilePage'
-import {MessPage} from './pages/MessPage'
-import {FriendsPage} from './pages/FriendsPage'
-import {ReestrPage} from './pages/ReestrPage'
-
+import {CreatePage} from './pages/CreatePage'
+import {DetailPage} from './pages/DetailPage'
 
 export const useRoutes = isAuth => {
   if (isAuth) {
     return(
       <Switch>
-      <Route path="/news" exact>
-      <NewsPage />
+      <Route path="/links" exact>
+      <LinksPage />
       </Route>
-      <Route path="/profile" exact>
-      <ProfilePage />
+      <Route path="/create" exact>
+      <CreatePage />
       </Route>
-      <Route path="/messages" exact>
-      <MessPage />
+      <Route path="/detail/:id">
+      <DetailPage />
       </Route>
-      <Route path="/friends" exact>
-      <FriendsPage />
-      </Route>
-      <Redirect to="/news" />
+      <Redirect to="/links" />
       </Switch>
     )
   }
@@ -32,9 +26,6 @@ export const useRoutes = isAuth => {
     <Switch>
     <Route path="/" exact>
     <AuthPage />
-    </Route>
-    <Route path="/reestration" exact>
-    <ReestrPage />
     </Route>
     <Redirect to="/" />
     </Switch>

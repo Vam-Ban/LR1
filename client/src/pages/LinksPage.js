@@ -1,9 +1,9 @@
 import React from "react"
 
-export const FriendsPage = () =>{
+export const LinksPage = () =>{
   return(
     <div>
-    <h1>Friends</h1>
+    <h1>Links</h1>
     </div>
   )
 }
