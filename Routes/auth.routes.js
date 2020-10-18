@@ -28,10 +28,10 @@ router.post('/register', registerValidation, async (req, res) => {
         const hashedpassword = await bcrypt.hash(password, 12)
         const user = new User({ email, hashedpassword })
         await user.save()
-        res.starus(201).json({ massage: "Користувач створений" })
+        res.starus(201).json({ message: "Користувач створений" })
     } catch (e) {
         console.log(e.massage)
-        res.status(500).json({ messsge: "Помилка сервера... Спробуйте зноу "})
+        res.status(500).json({ message: "Помилка сервера... Спробуйте зноу "})
     }
 })
 
