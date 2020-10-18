@@ -37,7 +37,7 @@ router.post('/register', registerValidation, async (req, res) => {
 
 //   api/auth/login
 const loginValidation = [
-    check('email', 'Некоректний email').normalizeEmail().isEmail(),
+    check('email', 'Некоректний email').isEmail(),
     check('password', 'Введите пароль').exists()
 ]
 router.post('/login', loginValidation, async (req, res) => {
@@ -52,10 +52,10 @@ router.post('/login', loginValidation, async (req, res) => {
         const { email, password } = req.body
         const user = await User.findOne({email})
         if (!user) {
-            return res.status(400).json({ message: "Користувача з даним  email не існує", user })
+            return res.status(400).json({ message: "Користувача з даним  email не існує", email })
         }
 
-        const isMatch = await bcrypt.compare(user.password, password)
+        const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch) {
             return res.status(400).json({ message: "Не правильний пароль" })
         }
