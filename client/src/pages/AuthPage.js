@@ -1,12 +1,15 @@
-import React, {useState} from "react"
+import React, {useEffect,useState} from "react"
 import {useHttp} from '../hooks/http.hook'
 
 export const AuthPage = () =>{
-  const {loading, error, request} = useHttp()
+  const {loading, request, error} = useHttp()
   const [form, setForm] = useState({initialState:{
     email: '', password: ''
   }})
 
+  useEffect(() => {
+
+  },[error])
   const changeHandler = event => {
     setForm({...form, [event.target.name]: event.target.value})
   }
