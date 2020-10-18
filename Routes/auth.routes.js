@@ -30,7 +30,7 @@ router.post('/register', registerValidation, async (req, res) => {
         await user.save()
         res.status(201).json({ message: "Користувач створений" })
     } catch (e) {
-        console.log(e.massage)
+        console.log(e.message)
         res.status(500).json({ message: "Помилка сервера... Спробуйте зноу "})
     }
 })
