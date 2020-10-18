@@ -37,7 +37,8 @@ router.post('/register', registerValidation, async (req, res) => {
 
 //   api/auth/login
 const loginValidation = [
-    check('email', 'Некоректний email').isEmail()
+    check('email', 'Некоректний email').normalizeEmail().isEmail(),
+    check('password', 'Введите пароль').exists()
 ]
 router.post('/login', loginValidation, async (req, res) => {
     try {
@@ -49,7 +50,7 @@ router.post('/login', loginValidation, async (req, res) => {
             })
         }
         const { email, password } = req.body
-        const user = await User.findOne(email)
+        const user = await User.findOne({email})
         if (!user) {
             return res.status(400).json({ message: "Користувача з даним  email не існує" })
         }
@@ -67,7 +68,7 @@ router.post('/login', loginValidation, async (req, res) => {
             token, userId: user.id
         })
     } catch (e) {
-        res.status(500).json({ messsge: "Помилка сервера... Спробуйте зноу" })
+        res.status(500).json({ message: "Помилка сервера... Спробуйте зноу" })
     }
 })
 
