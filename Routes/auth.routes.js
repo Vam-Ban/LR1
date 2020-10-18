@@ -22,11 +22,11 @@ router.post('/register', registerValidation, async (req, res) => {
         }
         const { email, password } = req.body
         const candidate = await User.findOne(email)
-        if (condidate) {
+        if (candidate) {
             return res.status(400).json({ message: "Користувач з наним email вже існує" })
         }
         const hashedpassword = await bcrypt.hash(password, 12)
-        const user = new User({ email, hasedpassword })
+        const user = new User({ email, hashedpassword })
         await user.save()
         res.starus(201).json({ massage: "Користувач створений" })
     } catch (e) {
