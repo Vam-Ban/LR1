@@ -3,10 +3,21 @@ const config = require('config')
 const Link = require('../Models/Link')
 const shortid = require('shortid')
 const auth = require('../middleware/auth.middleware')
+const { check, validationResult } = require('express-validator')
 const router = Router()
-
-router.post('/generate', auth,  async (req, res) => {
+const validation = [
+    check('from', 'Відсутнє посилання').exists(),
+    check('from', 'Некорекне посилання').isURL()
+]
+router.post('/generate', auth, validation,  async (req, res) => {
     try {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array(),
+                message: "Не коректні дані"
+            })
+        }
         const baseUrl = config.get('baseUrl')
         const {from} = req.body
         const code = shortid.generate()
@@ -34,11 +45,11 @@ router.get('/', auth, async (req, res) => {
     }
 })
 router.get('/:id', auth,  async (req, res) => {
-    try {
+    try{
         const link = await Link.findById(req.params.id)
         res.json(link)
-    } catch (e) {
-        res.status(500).json({ message: "Помилка сервера... Спробуйте знов" })
+    }catch{
+        res.status(400).json({ message: "Посилання не знайдено" })
     }
 })
 module.exports = router
