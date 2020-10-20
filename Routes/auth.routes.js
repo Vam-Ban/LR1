@@ -31,7 +31,7 @@ router.post('/register', registerValidation, async (req, res) => {
         res.status(201).json({ message: "Користувач створений" })
     } catch (e) {
         console.log(e.message)
-        res.status(500).json({ message: "Помилка сервера... Спробуйте зноу "})
+        res.status(500).json({ message: "Помилка сервера... Спробуйте знов "})
     }
 })
 
@@ -68,7 +68,7 @@ router.post('/login', loginValidation, async (req, res) => {
             token, userId: user.id
         })
     } catch (e) {
-        res.status(500).json({ message: "Помилка сервера... Спробуйте зноу" })
+        res.status(500).json({ message: "Помилка сервера... Спробуйте знов" })
     }
 })
 

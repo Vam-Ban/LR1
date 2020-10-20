@@ -11,9 +11,9 @@ export const LinksList = ({ links }) => {
       <thead>
       <tr>
         <th>№</th>
-        <th>Оригинальная</th>
-        <th>Сокращенная</th>
-        <th>Открыть</th>
+        <th>Орігінальна</th>
+        <th>Скорочення</th>
+        <th>Відкрити</th>
       </tr>
       </thead>
 
